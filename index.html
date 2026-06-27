@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+<title>Lesson Plans — MES V3</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1e293b;padding:clamp(12px,3vmin,32px);max-width:clamp(360px,85vmin,980px);margin:0 auto;min-height:100dvh}
+h1{font-size:clamp(18px,4.5vmin,32px);margin-bottom:2px;display:flex;align-items:center;gap:clamp(6px,1.5vmin,14px);flex-wrap:wrap}
+.sub{color:#64748b;font-size:clamp(12px,2.5vmin,16px);margin-bottom:clamp(12px,3vmin,28px);line-height:1.4}
+
+/* COLLAPSIBLE WEEK GROUPS */
+.week-group{margin-bottom:clamp(6px,1.5vmin,14px);border-radius:clamp(6px,1vmin,10px);overflow:hidden;border:1px solid #e2e8f0}
+.week-summary{display:flex;align-items:center;gap:clamp(6px,1.2vmin,12px);padding:clamp(8px,2vmin,16px) clamp(10px,2.5vmin,18px);background:#fff;cursor:pointer;font-weight:600;font-size:clamp(13px,3vmin,20px);user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0.08);transition:background .15s}
+.week-summary:hover{background:#f1f5f9}
+.week-summary:active{background:#e2e8f0}
+.week-icon{font-size:clamp(16px,4vmin,26px);line-height:1;transition:transform .2s}
+.week-group[open] .week-icon{transform:rotate(90deg)}
+.week-meta{margin-left:auto;display:flex;align-items:center;gap:8px;font-weight:400;color:#64748b;font-size:clamp(11px,2.2vmin,15px);white-space:nowrap}
+.week-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.7em;font-weight:500;background:#dbeafe;color:#2563eb}
+.week-group[open] .week-summary{border-radius:clamp(6px,1vmin,10px) clamp(6px,1vmin,10px) 0 0;border-bottom:1px solid #e2e8f0}
+
+/* CLASS LINKS */
+.class-list{list-style:none;background:#fff;padding:clamp(3px,0.8vmin,8px) 0;display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px}
+.class-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;text-decoration:none;color:#334155;font-size:clamp(11px,2.3vmin,14px);font-weight:500;background:#f8fafc;border:1px solid #e2e8f0;transition:all .15s;white-space:nowrap}
+.class-link:hover{background:#eff6ff;border-color:#93c5fd;color:#2563eb}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* FULL WEEK LINK */
+.week-link-row{display:flex;align-items:center;gap:8px;padding:8px 16px 12px;flex-wrap:wrap}
+.full-link{display:inline-flex;align-items:center;gap:4px;color:#3b82f6;text-decoration:none;font-size:0.85em;font-weight:500;padding:4px 0}
+.full-link:hover{text-decoration:underline}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:clamp(20px,5vmin,40px);color:#94a3b8}
+.empty-icon{font-size:clamp(32px,8vmin,56px);margin-bottom:8px}
+
+/* DARK MODE */
+@media(prefers-color-scheme:dark){
+body{background:#0f172a;color:#e2e8f0}
+.sub{color:#94a3b8}
+.week-group{border-color:#1e293b}
+.week-summary{background:#1e293b}
+.week-summary:hover{background:#334155}
+.week-meta{color:#94a3b8}
+.week-badge{background:#1e3a5f;color:#60a5fa}
+.class-list{background:#1e293b}
+.class-link{background:#0f172a;border-color:#334155;color:#cbd5e1}
+.class-link:hover{background:#1e3a5f;border-color:#3b82f6;color:#60a5fa}
+.full-link{color:#60a5fa}
+}
+</style>
+</head>
+<body>
+
+<h1>📝 Lesson Plans</h1>
+<p class="sub">English CEFR — MES V3 • 1D Devotion · 1E Endurance · 1M Meekness · 2D Devotion · 2E Endurance</p>
+
+<!-- WEEK 21 -->
+<details class="week-group" open>
+  <summary class="week-summary">
+    <span class="week-icon">▶</span>
+    <span>Week 21</span>
+    <span class="week-meta">
+      <span class="week-badge">5 classes</span>
+      <span>22–26 Jun</span>
+    </span>
+  </summary>
+  <div class="week-link-row">
+    <a href="week_21.html" class="full-link">📄 Open full lesson plan →</a>
+  </div>
+  <div class="class-list">
+    <a href="week_21.html#panel-1D" class="class-link"><span class="dot" style="background:#3b82f6"></span>1D Devotion</a>
+    <a href="week_21.html#panel-1E" class="class-link"><span class="dot" style="background:#22c55e"></span>1E Endurance</a>
+    <a href="week_21.html#panel-1M" class="class-link"><span class="dot" style="background:#8b5cf6"></span>1M Meekness</a>
+    <a href="week_21.html#panel-2D" class="class-link"><span class="dot" style="background:#f59e0b"></span>2D Devotion</a>
+    <a href="week_21.html#panel-2E" class="class-link"><span class="dot" style="background:#ef4444"></span>2E Endurance</a>
+  </div>
+</details>
+
+<!-- EMPTY STATE -->
+<div class="empty">
+  <div class="empty-icon">📅</div>
+  <p>More weeks coming soon.</p>
+</div>
+
+<script>
+/* Expand all on desktop, collapsed on mobile */
+if(window.innerWidth < 600){
+  document.querySelectorAll('.week-group[open]').forEach(g => g.removeAttribute('open'));
+}
+</script>
+</body>
+</html>
