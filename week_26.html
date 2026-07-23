@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Week 26 — Lesson Plans</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --green: #22c55e;
+    --green-bg: #dcfce7;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --ref-bg: #fffbeb;
+    --ref-border: #fde68a;
+    --pastel-1d: #dbeafe;
+    --pastel-1e: #d1fae5;
+    --pastel-1m: #ede9fe;
+    --pastel-2d: #ffedd5;
+    --pastel-2e: #fce7e8;
+    --f1-header-bg: #eff6ff;
+    --f2-header-bg: #fff7ed;
+    --content-bg: #f8fafc;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding:20px;max-width:1100px;margin:0 auto}
+  h1{font-size:1.5rem;margin-bottom:4px}
+  .subtitle{color:var(--text-muted);font-size:.85rem;margin-bottom:20px}
+  .section-divider{margin:32px 0 16px;padding-bottom:8px;border-bottom:3px solid var(--accent);display:flex;align-items:center;justify-content:space-between}
+  .section-divider h2{font-size:1.2rem;font-weight:700}
+  .section-divider .badge{font-size:.75rem;background:var(--border);color:var(--text-muted);border-radius:10px;padding:2px 10px;font-weight:500}
+  .form-group{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;margin-bottom:24px;overflow:hidden}
+  .form-header{padding:14px 20px;font-weight:700;border-bottom:1px solid var(--border);color:var(--text)}
+  .form-header.f1{background:var(--f1-header-bg)}.form-header.f2{background:var(--f2-header-bg)}
+  .standards-section{padding:12px 20px;border-bottom:1px solid var(--border);color:var(--text)}
+  .std-header h3{font-size:.82rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:700}
+  .std-row{display:flex;align-items:flex-start;gap:7px;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:.88rem;line-height:1.5;color:var(--text)}
+  .std-row:last-child{border-bottom:none}
+  .std-code{font-family:'Courier New',monospace;font-weight:600;font-size:.76rem;color:var(--accent);min-width:78px;flex-shrink:0;padding-top:2px}
+  .std-text{flex:1;color:var(--text)}
+  .copy-sm{flex-shrink:0;background:0 0;border:1px solid var(--border);border-radius:5px;padding:2px 5px;cursor:pointer;color:var(--text-muted);line-height:1;transition:all .15s}
+  .copy-sm:hover{border-color:var(--accent);color:var(--accent);background:var(--f1-header-bg)}
+  .class-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .class-tab{padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s;color:var(--text)}
+  .class-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .class-panel{display:none}.class-panel.active{display:block}
+  .day-tabs{display:flex;gap:4px;margin-bottom:14px}
+  .day-tab{padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);cursor:pointer;font-size:.8rem;font-weight:500;color:var(--text)}
+  .day-tab.active{background:var(--code-bg);color:#fff;border-color:var(--code-bg)}
+  .card{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+  .card h2{font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .copy-block{position:relative}
+  .copy-block .content{background:var(--content-bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:.9rem;line-height:1.6;white-space:pre-wrap}
+  .copy-block .code-block{background:var(--code-bg);color:var(--code-text);border:1px solid #334155;border-radius:8px;padding:14px;font-family:'Courier New',Consolas,monospace;font-size:.76rem;line-height:1.5;white-space:pre-wrap;max-height:420px;overflow-y:auto}
+  .copy-btn{position:absolute;top:8px;right:8px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 9px;cursor:pointer;color:var(--text-muted);z-index:2;display:flex;align-items:center;gap:4px;transition:all .15s}
+  .copy-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--f1-header-bg)}
+  .reflection-content{background:var(--ref-bg);color:var(--text);border:1px solid var(--ref-border);border-radius:8px;padding:14px}
+  .day-label{font-size:.75rem;background:var(--border);color:var(--text-muted);border-radius:4px;padding:2px 8px;margin-bottom:8px;display:inline-block}
+  .toast-container{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:99999;pointer-events:none}
+  .toast{background:var(--code-bg);color:#fff;padding:10px 24px;border-radius:8px;font-size:.9rem;font-weight:500;opacity:0;transition:opacity .25s;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .toast.show{opacity:1}
+  .icon{display:inline-flex;align-items:center}
+  .icon-check{display:none}
+  .copy-sm.copied .icon-copy,.copy-btn.copied .icon-copy{display:none}
+  .copy-sm.copied .icon-check,.copy-btn.copied .icon-check{display:inline-flex}
+
+  @media(prefers-color-scheme:dark){
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+      --ref-bg: #3b2f1e;
+      --ref-border: #5c4a2e;
+      --pastel-1d: #1e3a5f;
+      --pastel-1e: #1a3a2a;
+      --pastel-1m: #2e1a4a;
+      --pastel-2d: #3b2f1e;
+      --pastel-2e: #3b1e2a;
+      --f1-header-bg: #1e3a5f;
+      --f2-header-bg: #3b2f1e;
+      --content-bg: #0f172a;
+    }
+    .std-row{border-color:#1e293b}
+    .copy-sm:hover{background:var(--f1-header-bg);border-color:var(--accent);color:var(--accent)}
+    .day-tab.active{background:var(--code-bg)}
+    .toast{background:var(--border);color:var(--text)}
+  }
+
+  @media(max-width:600px){body{padding:12px}.card{padding:14px}.copy-btn{padding:4px 7px}}
+</style>
+</head>
+<body>
+<h1>🧮 Week 26 — Lesson Plans</h1>
+<p class="subtitle">2026-07-27 – 2026-07-31 • MES V3 • Various (per-class) • 15 DLPs</p>
+
+<div class="section-divider"><h2>Standards per Form</h2><span class="badge">CS → LS → LO</span></div>
+
+<div class="form-group"><div class="form-header f1">Form 1 — 1D Devotion · 1E Endurance · 1M Meekness</div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Content Standards</h3></div>
+    <div class="std-row"><span class="std-code">I1D-CS1</span><span class="std-text">2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics</span><button class="copy-sm" data-row="I1D-CS1: 2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1D-CS1</span><span class="std-text">3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning</span><button class="copy-sm" data-row="S1D-CS1: 3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J1D-CS1</span><span class="std-text">4.1 Communicate intelligibly through print and digital media on familiar topics</span><button class="copy-sm" data-row="J1D-CS1: 4.1 Communicate intelligibly through print and digital media on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">I1E-CS1</span><span class="std-text">2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics</span><button class="copy-sm" data-row="I1E-CS1: 2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1E-CS1</span><span class="std-text">3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning</span><button class="copy-sm" data-row="R1E-CS1: 3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1E-CS1</span><span class="std-text">4.1 Communicate intelligibly through print and digital media on familiar topics</span><button class="copy-sm" data-row="K1E-CS1: 4.1 Communicate intelligibly through print and digital media on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1M-CS1</span><span class="std-text">2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics</span><button class="copy-sm" data-row="S1M-CS1: 2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1M-CS1</span><span class="std-text">2.4 Communicate appropriately to a small or large group on familiar topics</span><button class="copy-sm" data-row="R1M-CS1: 2.4 Communicate appropriately to a small or large group on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1M-CS1</span><span class="std-text">4.1 Communicate intelligibly through print and digital media on familiar topics</span><button class="copy-sm" data-row="K1M-CS1: 4.1 Communicate intelligibly through print and digital media on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Learning Standards</h3></div>
+    <div class="std-row"><span class="std-code">I1D-LS1</span><span class="std-text">2.1.1 Ask about and give detailed information about themselves and others</span><button class="copy-sm" data-row="I1D-LS1: 2.1.1 Ask about and give detailed information about themselves and others"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1D-LS1</span><span class="std-text">3.1.1 Understand the main points in simple longer texts</span><button class="copy-sm" data-row="S1D-LS1: 3.1.1 Understand the main points in simple longer texts"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J1D-LS1</span><span class="std-text">4.1.1 Give detailed information about themselves and others</span><button class="copy-sm" data-row="J1D-LS1: 4.1.1 Give detailed information about themselves and others"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">I1E-LS1</span><span class="std-text">2.1.1 Ask about and give detailed information about themselves and others</span><button class="copy-sm" data-row="I1E-LS1: 2.1.1 Ask about and give detailed information about themselves and others"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1E-LS1</span><span class="std-text">3.1.1 Understand the main points in simple longer texts</span><button class="copy-sm" data-row="R1E-LS1: 3.1.1 Understand the main points in simple longer texts"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1E-LS1</span><span class="std-text">4.1.5 Connect sentences into two coherent paragraphs or more using basic coordinating conjunctions and reference pronouns</span><button class="copy-sm" data-row="K1E-LS1: 4.1.5 Connect sentences into two coherent paragraphs or more using basic coordinating conjunctions and reference pronouns"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1M-LS1</span><span class="std-text">2.1.1 Ask about and give detailed information about themselves and others</span><button class="copy-sm" data-row="S1M-LS1: 2.1.1 Ask about and give detailed information about themselves and others"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1M-LS1</span><span class="std-text">2.4.1 Narrate short stories, events and experiences</span><button class="copy-sm" data-row="R1M-LS1: 2.4.1 Narrate short stories, events and experiences"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1M-LS1</span><span class="std-text">4.1.5 Connect sentences into two coherent paragraphs or more using basic coordinating conjunctions and reference pronouns</span><button class="copy-sm" data-row="K1M-LS1: 4.1.5 Connect sentences into two coherent paragraphs or more using basic coordinating conjunctions and reference pronouns"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Lesson Objectives</h3></div>
+    <div class="std-row"><span class="std-code">I1D-LO1</span><span class="std-text">Introduce and practise vocabulary related to my favourite things</span><button class="copy-sm" data-row="I1D-LO1: Introduce and practise vocabulary related to my favourite things"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1D-LO1</span><span class="std-text">Explore my favourite things through reading -- deeper practice</span><button class="copy-sm" data-row="S1D-LO1: Explore my favourite things through reading -- deeper practice"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J1D-LO1</span><span class="std-text">Produce my favourite things output -- consolidation and assessment</span><button class="copy-sm" data-row="J1D-LO1: Produce my favourite things output -- consolidation and assessment"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">I1E-LO1</span><span class="std-text">Introduce and practise vocabulary related to food and healthy eating</span><button class="copy-sm" data-row="I1E-LO1: Introduce and practise vocabulary related to food and healthy eating"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1E-LO1</span><span class="std-text">Explore food and healthy eating through reading -- deeper practice</span><button class="copy-sm" data-row="R1E-LO1: Explore food and healthy eating through reading -- deeper practice"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1E-LO1</span><span class="std-text">Produce food and healthy eating output -- consolidation and assessment</span><button class="copy-sm" data-row="K1E-LO1: Produce food and healthy eating output -- consolidation and assessment"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S1M-LO1</span><span class="std-text">Discuss and decide on English topics and format for AI-generated ecourseware</span><button class="copy-sm" data-row="S1M-LO1: Discuss and decide on English topics and format for AI-generated ecourseware"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R1M-LO1</span><span class="std-text">Plan ecourseware sections and negotiate group roles using spoken English</span><button class="copy-sm" data-row="R1M-LO1: Plan ecourseware sections and negotiate group roles using spoken English"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K1M-LO1</span><span class="std-text">Write English learning content (quizzes, explanations, dialogues) for ecourseware modules</span><button class="copy-sm" data-row="K1M-LO1: Write English learning content (quizzes, explanations, dialogues) for ecourseware modules"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+</div>
+<div class="form-group"><div class="form-header f2">Form 2 — 2D Devotion · 2E Endurance</div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Content Standards</h3></div>
+    <div class="std-row"><span class="std-code">I2D-CS1</span><span class="std-text">2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics</span><button class="copy-sm" data-row="I2D-CS1: 2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2D-CS1</span><span class="std-text">3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning</span><button class="copy-sm" data-row="K2D-CS1: 3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J2D-CS1</span><span class="std-text">4.1 Communicate intelligibly through print and digital media on familiar topics</span><button class="copy-sm" data-row="J2D-CS1: 4.1 Communicate intelligibly through print and digital media on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S2E-CS1</span><span class="std-text">2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics</span><button class="copy-sm" data-row="S2E-CS1: 2.1 Communicate information, ideas, opinions and feelings intelligibly on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R2E-CS1</span><span class="std-text">3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning</span><button class="copy-sm" data-row="R2E-CS1: 3.1 Understand a variety of texts by using a range of appropriate reading strategies to construct meaning"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2E-CS1</span><span class="std-text">4.1 Communicate intelligibly through print and digital media on familiar topics</span><button class="copy-sm" data-row="K2E-CS1: 4.1 Communicate intelligibly through print and digital media on familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Learning Standards</h3></div>
+    <div class="std-row"><span class="std-code">I2D-LS1</span><span class="std-text">2.1.1 Ask about and explain key information from simple texts</span><button class="copy-sm" data-row="I2D-LS1: 2.1.1 Ask about and explain key information from simple texts"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2D-LS1</span><span class="std-text">3.1.1 Understand the main points in simple longer texts on a range of familiar topics</span><button class="copy-sm" data-row="K2D-LS1: 3.1.1 Understand the main points in simple longer texts on a range of familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J2D-LS1</span><span class="std-text">4.1.1 Explain simple content from what they have read</span><button class="copy-sm" data-row="J2D-LS1: 4.1.1 Explain simple content from what they have read"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S2E-LS1</span><span class="std-text">2.1.1 Ask about and explain key information from simple texts</span><button class="copy-sm" data-row="S2E-LS1: 2.1.1 Ask about and explain key information from simple texts"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R2E-LS1</span><span class="std-text">3.1.1 Understand the main points in simple longer texts on a range of familiar topics</span><button class="copy-sm" data-row="R2E-LS1: 3.1.1 Understand the main points in simple longer texts on a range of familiar topics"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2E-LS1</span><span class="std-text">4.1.3 Summarise the main points of a simple story, text or plot</span><button class="copy-sm" data-row="K2E-LS1: 4.1.3 Summarise the main points of a simple story, text or plot"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+  <div class="standards-section">
+    <div class="std-header"><h3>Lesson Objectives</h3></div>
+    <div class="std-row"><span class="std-code">I2D-LO1</span><span class="std-text">Introduce and practise vocabulary related to places in town and directions</span><button class="copy-sm" data-row="I2D-LO1: Introduce and practise vocabulary related to places in town and directions"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2D-LO1</span><span class="std-text">Explore places in town and directions through reading -- deeper practice</span><button class="copy-sm" data-row="K2D-LO1: Explore places in town and directions through reading -- deeper practice"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">J2D-LO1</span><span class="std-text">Produce places in town and directions output -- consolidation and assessment</span><button class="copy-sm" data-row="J2D-LO1: Produce places in town and directions output -- consolidation and assessment"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">S2E-LO1</span><span class="std-text">Introduce and practise vocabulary related to hobbies, talents and future careers</span><button class="copy-sm" data-row="S2E-LO1: Introduce and practise vocabulary related to hobbies, talents and future careers"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">R2E-LO1</span><span class="std-text">Explore hobbies, talents and future careers through reading -- deeper practice</span><button class="copy-sm" data-row="R2E-LO1: Explore hobbies, talents and future careers through reading -- deeper practice"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+    <div class="std-row"><span class="std-code">K2E-LO1</span><span class="std-text">Produce hobbies, talents and future careers output -- consolidation and assessment</span><button class="copy-sm" data-row="K2E-LO1: Produce hobbies, talents and future careers output -- consolidation and assessment"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span></button></div>
+  </div>
+</div>
+
+<div class="section-divider"><h2>Lesson Plans</h2><span class="badge">Select class, then day</span></div>
+
+<div class="class-tabs">  <button class="class-tab active" onclick="switchClass('1D')">🟦 1 Devotion <span class="badge">Mon·Tue·Fri</span></button>
+  <button class="class-tab" onclick="switchClass('1E')">🟩 1 Endurance <span class="badge">Mon·Wed·Thu</span></button>
+  <button class="class-tab" onclick="switchClass('1M')">🟪 1 Meekness <span class="badge">Tue·Wed·Thu</span></button>
+  <button class="class-tab" onclick="switchClass('2D')">🟧 2 Devotion <span class="badge">Mon·Thu·Fri</span></button>
+  <button class="class-tab" onclick="switchClass('2E')">🟥 2 Endurance <span class="badge">Tue·Wed·Thu</span></button>
+</div>
+<div class="class-panel active" id="panel-1D">
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="switchDay('1D','Mon')">Monday</button>
+    <button class="day-tab" onclick="switchDay('1D','Tue')">Tuesday</button>
+    <button class="day-tab" onclick="switchDay('1D','Fri')">Friday</button>
+  </div>
+  <div class="day-panel active" id="day-1D-Mon">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Monday DLP — Speaking Focus</h2>
+      <span class="day-label">I1D • 2026-07-27 • CS 2.1 / LS 2.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1D-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1D-Mon">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher tells students that a new friend is joining the class and we need to tell them our favourite things to make them feel welcome.&lt;br&gt;2. Teacher asks students to think about how they can explain what they like using very short sentences.&lt;br&gt;3. Students suggest simple words like 'blue' or 'cat' to help solve the problem of introducing themselves.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sentence Frame Introduction&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher shows flashcards of primary colours, numbers 1--10, and common objects like balls and cats.&lt;br&gt;2. Teacher models the sentence frame 'I like [colour/number/object]' using clear gestures.&lt;br&gt;3. Students engage in choral repetition of the frame to familiarise themselves with the rhythm of the sentence.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Task Card Group Discussion&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher divides students into small groups and provides each group with a task card containing images of various items.&lt;br&gt;2. Students take turns pointing to an item on their card and saying 'I like [item]' to their group members.&lt;br&gt;3. Group members provide a 'high-five' to their peers after each successful sentence is spoken.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Reading and Sharing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Group A reads a short text: 'Adam likes blue. He has a blue hat. Blue is nice.'&lt;br&gt;2. Group B reads a short text: 'Maya likes five. She has five books. Five is a lucky number.'&lt;br&gt;3. Students from Group A pair with Group B to tell their new partner what Adam or Maya likes using the frame 'Adam/Maya likes...'.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher says several sentences such as 'I like red' or 'I likes green'.&lt;br&gt;2. Students give a thumbs up if the sentence sounds correct and a thumbs down if they hear a mistake.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1D-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1D-Mon">Dharshayani A/P Paul and Mohamad Ryyan bin Roslan successfully completed the jigsaw speaking task with minimal errors. Nur Dayana Qhairena showed improvement in identifying colours but still needs help with the 'I like' sentence frame.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1D-Tue">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Tuesday DLP — Reading Focus</h2>
+      <span class="day-label">S1D • 2026-07-28 • CS 3.1 / LS 3.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1D-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1D-Tue">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher presents a 'Lost Pet' poster that is missing a picture of the animal.&lt;br&gt;2. Teacher explains that the owner is very sad and needs help describing the pet to the neighbors.&lt;br&gt;3. Students brainstorm simple words like 'big', 'small', or 'brown' to help the owner find the pet.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pet Profile Info-Gap&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher divides students into pairs and gives each student a different Pet Profile card.&lt;br&gt;2. Student A reads a short text: 'The cat is thin. It is grey.'&lt;br&gt;3. Student B reads a short text: 'The rabbit is fat. It is white.'&lt;br&gt;4. Students ask each other simple questions to fill in a missing information table about the pets' sizes and colors.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pet Show Simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher sets up a classroom 'Pet Show' where students act as judges and owners.&lt;br&gt;2. Students use a reading strip with a sentence frame: 'This is my pet. It is [adjective] and [color].'&lt;br&gt;3. Each student reads their strip aloud to the 'judges' while showing a picture of the animal.&lt;br&gt;4. Judges listen and circle the correct adjective they heard on a score sheet.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. One student stands up and summarizes the different animals and adjectives learned during the lesson.&lt;br&gt;2. Other students add more adjectives or animal names to the summary to help their classmate.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1D-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1D-Tue">Mohamad Ryyan bin Roslan showed great progress in reading the sentence frames aloud. Nur Dayana Qhairena was able to identify the correct adjectives during the info-gap activity with very little guidance.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1D-Fri">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Friday DLP — Writing Focus</h2>
+      <span class="day-label">J1D • 2026-07-31 • CS 4.1 / LS 4.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1D-Fri"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1D-Fri">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher displays three simple sentences about toys on the board.&lt;br&gt;2. Students shout "True" or "False" based on the pictures shown next to each sentence.&lt;br&gt;3. Teacher confirms the answers to review vocabulary such as "ball", "doll", and "bike".&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sentence Frames for Writing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher introduces simple sentence frames: "My favourite thing is a..." and "It is (colour)."&lt;br&gt;2. Students repeat the frames chorally to build confidence and familiarity.&lt;br&gt;3. Teacher models filling in the blanks using a picture of a blue car on the board.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Reading Task&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher divides the class into four groups, each receiving a different short text about a favourite object.&lt;br&gt;2. Groups read their specific text, such as "This is a kite. It is green. It is big."&lt;br&gt;3. Students move to meet peers from other groups to share one detail about their assigned text.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Small Group Discussion and Writing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Groups receive task cards featuring pictures of a train, a robot, and a puzzle.&lt;br&gt;2. Students use the task cards to discuss which item they like best in their small groups.&lt;br&gt;3. Each student writes two simple sentences about their chosen item in their exercise books.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher distributes small slips of paper to every student for the exit ticket.&lt;br&gt;2. Students write one sentence about their favourite thing and hand it to the teacher before leaving.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1D-Fri"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1D-Fri">Dharshayani and Santhiya successfully completed their writing tasks with minimal support. Mohamad Ryyan and Muhammad Afiq Ziyad showed progress in using the sentence frames correctly during the group activity.</div>
+      </div>
+    </div></div>
+
+</div>
+<div class="class-panel" id="panel-1E">
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="switchDay('1E','Mon')">Monday</button>
+    <button class="day-tab" onclick="switchDay('1E','Wed')">Wednesday</button>
+    <button class="day-tab" onclick="switchDay('1E','Thu')">Thursday</button>
+  </div>
+  <div class="day-panel active" id="day-1E-Mon">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Monday DLP — Speaking Focus</h2>
+      <span class="day-label">I1E • 2026-07-27 • CS 2.1 / LS 2.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1E-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1E-Mon">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks the provocative question: 'If you could only eat one food for the rest of your life, would you choose health or taste?'&lt;br&gt;2. Students think individually for one minute then discuss their choice and reasoning with a partner.&lt;br&gt;3. Selected pairs share their opinions with the class using connectors like 'because' and 'furthermore' to justify their choice.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Reading: The Four Pillars of Nutrition&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students are divided into four 'expert' groups, each reading a short text about a specific food category: Proteins, Carbohydrates, Healthy Fats, or Vitamins.&lt;br&gt;2. Each text describes the benefits and examples of that category in three to five sentences.&lt;br&gt;3. Students return to their original home groups to teach their members about their specific category.&lt;br&gt;4. Group members must take notes on the categories they did not read about to complete a full nutritional profile.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Info-Gap: The Healthy Cafe Interview&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students work in pairs where Student A has a menu with prices but missing health ratings, and Student B has health ratings but missing prices.&lt;br&gt;2. Students must interview each other using target phrases like 'How healthy is the...' and 'How much does the... cost?' to complete their menus.&lt;br&gt;3. Once the menus are complete, pairs must negotiate and choose the best meal based on both cost and health benefits.&lt;br&gt;4. Pairs present their final choice to the class with a brief explanation.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher shows a mysterious, zoomed-in photo of a rare tropical 'superfood' without revealing its name.&lt;br&gt;2. Teacher asks if anyone knows how this fruit can boost the immune system, promising the answer in the next lesson.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1E-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1E-Mon">Celine Yan-Xin Phee and Huzaifah demonstrated high fluency during the info-gap activity by using extended sentences. Deni Aago and Nur Adni Irdina showed great improvement in using logical connectors when explaining their nutritional profiles.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1E-Wed">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Wednesday DLP — Reading Focus</h2>
+      <span class="day-label">R1E • 2026-07-29 • CS 3.1 / LS 3.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1E-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1E-Wed">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Students move around the classroom to view five posters displaying various healthy and unhealthy meal sets.&lt;br&gt;2. Students identify and write down one key ingredient from each poster on a small slip of paper.&lt;br&gt;3. Teacher facilitates a brief discussion on which meal provides the most energy based on the ingredients found.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Menu Comparison Text Analysis&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher presents a reading text comparing two food outlets: 'The Green Deli' and 'Sugar Shack'.&lt;br&gt;2. The text highlights that 'The Green Deli' serves lean proteins and whole grains, whereas 'Sugar Shack' focuses on processed carbs.&lt;br&gt;3. Teacher explains the use of comparative connectors like 'on the other hand' and 'similarly' found in the text.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Nutritional Info-Gap&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students work in pairs where Student A has the fiber content of the meals and Student B has the sugar content.&lt;br&gt;2. They must communicate in English to exchange data and complete a full nutritional profile table for both outlets.&lt;br&gt;3. Pairs verify their answers against the original reading text to ensure accuracy.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Healthy Cafe Simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students act out a simulation where a customer asks a waiter for the healthiest options on the menu.&lt;br&gt;2. The waiter must use information from the reading text to justify why the grilled chicken is better than the fried wings.&lt;br&gt;3. Students switch roles to ensure everyone practices using the vocabulary from the comprehension text.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. One student provides a summary of the health benefits associated with the food items discussed in the lesson.&lt;br&gt;2. Other students add additional points regarding the importance of reading nutritional labels.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1E-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1E-Wed">Adzin Danish and Celine Yan-Xin Phee showed high proficiency by using complex connectors during the info-gap activity. Huzaifah and Jayamitthra demonstrated strong comprehension by accurately justifying food choices during the simulation.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1E-Thu">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Thursday DLP — Writing Focus</h2>
+      <span class="day-label">K1E • 2026-07-30 • CS 4.1 / LS 4.1.5</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1E-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1E-Thu">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher plays a 30-second audio clip of a chef enthusiastically describing a signature healthy dish.&lt;br&gt;2. Students listen and list three adjectives they heard to describe the food.&lt;br&gt;3. Teacher asks students to share their reactions to the audio and introduces the writing topic.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Paragraph Structure and Connectors&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher explains the structure of a descriptive paragraph including topic sentences and supporting reasons.&lt;br&gt;2. Teacher introduces advanced connectors such as --furthermore--, --consequently--, and --in addition--.&lt;br&gt;3. Students practice oral sentence construction using these connectors in pairs.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Interview Simulation and Writing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students role-play a simulation where one is a food blogger and the other is a chef discussing a healthy meal.&lt;br&gt;2. Students use notes from the simulation to write a draft paragraph about their own favorite healthy meal.&lt;br&gt;3. Students refine their paragraphs by ensuring at least three logical reasons are provided for their choice.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gallery Walk Peer Feedback&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students display their completed paragraphs on the walls for a gallery walk.&lt;br&gt;2. Peers move around the room and read the paragraphs written by their classmates.&lt;br&gt;3. Students use sticky notes to provide feedback on the use of connectors and the clarity of reasons.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher distributes small paper slips for the exit ticket activity.&lt;br&gt;2. Students write one sentence explaining their main takeaway regarding paragraph writing before leaving the room.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1E-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1E-Thu">Adzin Danish and Jayamitthra demonstrated excellent command of complex connectors in their paragraphs. Keerthikan and Nur Adni Irdina provided very insightful peer feedback during the gallery walk session.</div>
+      </div>
+    </div></div>
+
+</div>
+<div class="class-panel" id="panel-1M">
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="switchDay('1M','Tue')">Tuesday</button>
+    <button class="day-tab" onclick="switchDay('1M','Wed')">Wednesday</button>
+    <button class="day-tab" onclick="switchDay('1M','Thu')">Thursday</button>
+  </div>
+  <div class="day-panel active" id="day-1M-Tue">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Tuesday DLP — Speaking Focus</h2>
+      <span class="day-label">S1M • 2026-07-28 • CS 2.1 / LS 2.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1M-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1M-Tue">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Students participate in a gallery walk to observe posters showing various digital English learning modules and AI-generated prompts.&lt;br&gt;2. Students move in pairs to discuss which posters look most engaging and identify the English skills being taught.&lt;br&gt;3. Teacher introduces the PBL project where students will create their own English eCourseware using AI tools like ChatGPT and Gemini.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;E-Courseware and AI Integration&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher explains the components of effective eCourseware such as clear objectives, interactive content, and assessment.&lt;br&gt;2. Teacher demonstrates how to use DeepSeek to generate a list of creative lesson topics for Form 1 English.&lt;br&gt;3. Teacher explains the project timeline, focusing on today's goal of brainstorming and selection.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Topic and Format Info-Gap&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students are paired as Student A and Student B, each holding unique lists of CEFR-aligned topics and digital delivery formats.&lt;br&gt;2. Students must communicate orally to match the best English topic with a suitable digital format.&lt;br&gt;3. Pairs reach a consensus on a potential project theme and present their reasoning to the class.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;AI Editorial Board Simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Groups simulate a professional editorial meeting to finalize their eCourseware project focus.&lt;br&gt;2. One student acts as the AI prompt engineer to generate three outline options from ChatGPT while others act as critics.&lt;br&gt;3. Groups debate the merits of the AI suggestions and formally decide on one specific topic and format for their project.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Students individually write down one aspect of the brainstorming process they found easy and one they found difficult.&lt;br&gt;2. Students share their reflections with a partner to identify common challenges in the decision-making process.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1M-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1M-Tue">Choye Kai En and Dhivenassh A/L Ravindran demonstrated excellent leadership during the editorial board simulation. Gan Kok Xian used complex sentences effectively when justifying the choice of digital formats.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1M-Wed">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Wednesday DLP — Speaking Focus</h2>
+      <span class="day-label">R1M • 2026-07-29 • CS 2.4 / LS 2.4.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1M-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1M-Wed">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher provides three clues about a digital entity: 'I can process millions of words', 'I can act as a personal tutor', and 'I am built on neural networks'.&lt;br&gt;2. Students compete in groups to guess the entity, eventually identifying it as 'Artificial Intelligence' or 'AI'.&lt;br&gt;3. Teacher explains that today students will use AI to plan the structure of their own English eCourseware.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Reading: eCourseware Components&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students are divided into four home groups, each receiving a text about a different component: 'Interactive Quizzes', 'Grammar Modules', 'Dialogue Scripts', or 'User Interface'.&lt;br&gt;2. The text for 'Interactive Quizzes' explains that they must include multiple-choice questions with immediate AI-generated feedback.&lt;br&gt;3. Students move to expert groups to master their component before returning to their home groups to teach their peers.&lt;br&gt;4. Home groups negotiate which components are most essential for their specific target audience using spoken English.&lt;br&gt;5. Groups finalize a list of four main sections for their eCourseware.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Info-Gap: Role and Tool Matching&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. In pairs, Student A receives a card listing AI tool strengths (e.g., ChatGPT for creative scripts, DeepSeek for logical structuring).&lt;br&gt;2. Student B receives a card listing project roles (e.g., Prompt Engineer, Content Editor, UI Designer) and their specific needs.&lt;br&gt;3. Pairs must speak to each other to match the correct AI tool to the specific role and eCourseware section.&lt;br&gt;4. Students negotiate and assign roles within their larger groups based on the matched tools.&lt;br&gt;5. Each group orally presents their chosen structure and assigned roles to the class.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks the class if they believe an AI can generate a perfect English quiz in under ten seconds.&lt;br&gt;2. Teacher reveals that in the next lesson, they will test their prompts against the AI to see if the content is truly accurate.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1M-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1M-Wed">Choye Kai En and Dhivenassh showed great leadership in negotiating the UI design roles. Fatin Nurzafirah and Gan Kok Xian were able to accurately explain the jigsaw reading components to their group members.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-1M-Thu">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Thursday DLP — Writing Focus</h2>
+      <span class="day-label">K1M • 2026-07-30 • CS 4.1 / LS 4.1.5</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-1M-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-1M-Thu">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher presents a scenario where a rural school lacks interactive English materials for their computer lab.&lt;br&gt;2. Students brainstorm how they can use their ecourseware to solve this lack of digital resources.&lt;br&gt;3. Teacher explains that today they will draft the final content using AI to assist their writing process.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Content Creation Simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students take on roles as AI Editors and Peer Reviewers within their project groups.&lt;br&gt;2. AI Editors input specific prompts into AI tools like ChatGPT to generate grammar notes and dialogues for their modules.&lt;br&gt;3. Peer Reviewers evaluate the AI output for language level appropriateness and provide written feedback for final drafting.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Quiz Content Info-Gap&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Pairs receive two different halves of a quiz template where Student A has questions 1--5 and Student B has the corresponding answer keys.&lt;br&gt;2. Students communicate verbally to verify that the questions and answers align correctly without looking at each other's sheets.&lt;br&gt;3. Students then write a final set of five original quiz questions for their ecourseware based on this collaborative check.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. One student summarizes the key elements required to write a good educational dialogue and quiz.&lt;br&gt;2. Other students contribute additional ideas on how AI helped speed up their drafting process.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-1m)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-1M-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-1M-Thu">Choye Kai En and Gan Kok Xian showed high proficiency in refining AI-generated dialogues. Siti Zahirah and Hadwin successfully completed the writing tasks with minimal supervision.</div>
+      </div>
+    </div></div>
+
+</div>
+<div class="class-panel" id="panel-2D">
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="switchDay('2D','Mon')">Monday</button>
+    <button class="day-tab" onclick="switchDay('2D','Thu')">Thursday</button>
+    <button class="day-tab" onclick="switchDay('2D','Fri')">Friday</button>
+  </div>
+  <div class="day-panel active" id="day-2D-Mon">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Monday DLP — Speaking Focus</h2>
+      <span class="day-label">I2D • 2026-07-27 • CS 2.1 / LS 2.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2D-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2D-Mon">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks students: If your GPS fails in a new town, how do you find the library?&lt;br&gt;2. Students think alone for one minute and then discuss their ideas with a partner.&lt;br&gt;3. Pairs share their answers with the class to highlight the importance of asking for directions.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Place Descriptions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher divides the class into three expert groups: School, Library, and Market.&lt;br&gt;2. Each group reads a three-sentence description of their assigned place from a card.&lt;br&gt;3. Students move to new mixed groups to tell their peers about their specific place.&lt;br&gt;4. Teacher provides a word bank containing keywords like books, study, and food to help.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Where is the Place Info-Gap&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher explains the sentence frame: Where is the [place]? and It is next to the [place].&lt;br&gt;2. Students work in pairs where Student A has Map A and Student B has Map B.&lt;br&gt;3. Partners ask each other about missing buildings to complete their own maps.&lt;br&gt;4. Teacher monitors the pairs and assists with pronunciation of the place names.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks: What if the place you are looking for is hidden underground?&lt;br&gt;2. Teacher tells students that the next lesson will reveal secret city locations.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2D-Mon"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2D-Mon">Muhammad Adeeb and Nur Hawani Qistina successfully used the sentence frames during the info-gap activity. Mohammad Izz Muqri needed extra guidance with the jigsaw reading but eventually identified the keywords.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-2D-Thu">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Thursday DLP — Reading Focus</h2>
+      <span class="day-label">K2D • 2026-07-30 • CS 3.1 / LS 3.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2D-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2D-Thu">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher plays a 30-second audio clip featuring city traffic sounds and a GPS voice giving directions.&lt;br&gt;2. Students identify the sounds and guess the situation (finding a way in a city).&lt;br&gt;3. Teacher asks students if they have ever followed directions to a specific place.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Map Simulation Pair Work&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher distributes a simple town map and three short direction cards to each pair.&lt;br&gt;2. One student reads the direction card (e.g., 'Go straight, turn right at the post office').&lt;br&gt;3. The partner simulates the route on the map using a finger or a pencil.&lt;br&gt;4. Students switch roles to practice reading and following the next set of directions.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Direction Gallery Walk&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher posts three short reading passages around the classroom describing routes to different buildings.&lt;br&gt;2. Students walk to each station, read the passage, and identify the final destination on their worksheet.&lt;br&gt;3. Students leave a sticky note at each station with their answer and a small star for the clearest description.&lt;br&gt;4. Students review the peer feedback sticky notes to see if their classmates reached the same destination.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher provides small exit ticket slips to all students.&lt;br&gt;2. Students write one simple sentence naming a place they can find using a map (e.g., 'I can find the bank').&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2D-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2D-Thu">Muhammad Aiman Rayyan and Nur Aleeya Hazira successfully completed the map simulation with high accuracy. Mohammad Izz Muqri showed improvement in reading simple direction phrases but still requires support with left-right orientation.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-2D-Fri">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Friday DLP — Writing Focus</h2>
+      <span class="day-label">J2D • 2026-07-31 • CS 4.1 / LS 4.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2D-Fri"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2D-Fri">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher plays a 30-second audio clip of a tourist sounding lost and asking for help in a busy city.&lt;br&gt;2. Students share their reactions to the clip and identify the problem the person is facing.&lt;br&gt;3. Teacher introduces the lesson goal: writing simple directions to help people find places in town.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Direction Phrases and Sentence Frames&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher displays a simple map with landmarks like a bank, school, and park.&lt;br&gt;2. Teacher introduces simple phrases: 'go straight', 'turn left', and 'next to' using arrow cards.&lt;br&gt;3. Students practice using the sentence frame: 'To go to the (place), (direction).'&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jigsaw Reading: Landmark Locations&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher divides the class into groups and gives each group a different short text about a landmark.&lt;br&gt;2. Group 1 reads about the Bank, Group 2 about the Clinic, and Group 3 about the Post Office.&lt;br&gt;3. Students move to different groups to share their information and complete a collective map.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Info-gap: Writing the Way&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Pairs are formed where Student A has a map with the start point and Student B has the destination.&lt;br&gt;2. Students ask each other for directions using a provided word bank to fill the gaps in their maps.&lt;br&gt;3. Each student writes three simple sentences describing the route from the school to the clinic.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Students write down 3 new places, 2 direction words, and 1 thing they liked about the activity.&lt;br&gt;2. Teacher reviews the responses to assess which students need more help with basic vocabulary.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2d)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2D-Fri"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2D-Fri">Mohammad Izz Muqri and Nur Aleeya Hazira successfully used the sentence frames to write their directions. Muhammad Arman required additional support with the jigsaw reading but managed to complete his map with help from peers.</div>
+      </div>
+    </div></div>
+
+</div>
+<div class="class-panel" id="panel-2E">
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="switchDay('2E','Tue')">Tuesday</button>
+    <button class="day-tab" onclick="switchDay('2E','Wed')">Wednesday</button>
+    <button class="day-tab" onclick="switchDay('2E','Thu')">Thursday</button>
+  </div>
+  <div class="day-panel active" id="day-2E-Tue">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Tuesday DLP — Speaking Focus</h2>
+      <span class="day-label">S2E • 2026-07-28 • CS 2.1 / LS 2.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2E-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2E-Tue">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Students move around the classroom to observe five images of niche hobbies like drone racing and pottery.&lt;br&gt;2. Students write one adjective on the paper next to each image to describe the talent required.&lt;br&gt;3. Teacher asks students to vote on which hobby seems most profitable for a future career.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Talent-Career Mapping&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher introduces high-level vocabulary such as 'strategic planning' and 'aesthetic awareness'.&lt;br&gt;2. Teacher models how to explain the transition from a hobby to a professional career using 'because' and 'therefore'.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Career Relay Race&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students compete in a board relay to link talent keywords to specific professional roles.&lt;br&gt;2. Each team must briefly justify one of their matches orally to the class to earn points.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Peer Feedback Gallery Walk&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Pairs prepare a short oral presentation about a hobby-based career and display their main points.&lt;br&gt;2. Students rotate to evaluate their peers' ideas and leave constructive advice on sticky notes.&lt;br&gt;3. Pairs reflect on the feedback and share the most useful tip with the class.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks students to consider if their current hobbies will still exist in the year 2050.&lt;br&gt;2. Teacher reveals that tomorrow's lesson will focus on 'Space Tourism' as a potential career field.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2E-Tue"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2E-Tue">Aliff Fahmii and Azwa Shahirah demonstrated excellent critical thinking when justifying their career matches. Muhammad Aiman Iskandar provided very detailed and helpful peer feedback during the gallery walk.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-2E-Wed">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Wednesday DLP — Reading Focus</h2>
+      <span class="day-label">R2E • 2026-07-29 • CS 3.1 / LS 3.1.1</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2E-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2E-Wed">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher provides three clues about a secret career such as working with technology and solving complex puzzles.&lt;br&gt;2. Students guess the hobby or career based on the clues within a strict one-minute time limit.&lt;br&gt;3. Teacher introduces the reading topic by revealing the career and asking how a hobby can lead to that profession.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Analyzing Professional Profiles&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher introduces a reading passage featuring a professional e-sports player and a marine biologist who started as a hobbyist diver.&lt;br&gt;2. The text describes how their childhood interests evolved into full-time careers through dedication and skill development.&lt;br&gt;3. Teacher explains how to extract main points and scan for specific details like qualifications and daily tasks.&lt;br&gt;4. Teacher demonstrates how to compare the two profiles using a table to highlight differences in talents and future prospects.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Career Interview Simulation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students work in pairs to simulate a talk-show interview between a host and one of the professionals from the text.&lt;br&gt;2. The 'professional' must use details from the reading to explain their journey from hobby to career.&lt;br&gt;3. The 'host' asks probing questions about the talents required and advice for students looking for future jobs.&lt;br&gt;4. Pairs switch roles to ensure everyone practices reading comprehension and oral communication.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gallery Walk with Peer Feedback&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Groups summarize one career profile on a large sheet of paper, listing three key talents and two future goals mentioned in the text.&lt;br&gt;2. Students paste their posters around the room for a gallery walk session.&lt;br&gt;3. Students move from poster to poster to read the summaries and provide feedback using sticky notes.&lt;br&gt;4. Feedback must focus on the accuracy of the information retrieved from the reading text.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher asks three rapid-fire questions about the reading profiles to check for overall comprehension.&lt;br&gt;2. Students respond with a thumbs-up for 'True' or a thumbs-down for 'False' to indicate their answers.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2E-Wed"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2E-Wed">Aliff Fahmii and Azwa Shahirah demonstrated excellent critical thinking by providing detailed feedback during the gallery walk. Fawwaz Zahirul and Hani Raihannah were able to summarize the text accurately during the simulation activity.</div>
+      </div>
+    </div></div>
+  <div class="day-panel" id="day-2E-Thu">
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Thursday DLP — Writing Focus</h2>
+      <span class="day-label">K2E • 2026-07-30 • CS 4.1 / LS 4.1.3</span>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="lp-2E-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy HTML</span></button>
+        <pre class="code-block" id="lp-2E-Thu">&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Set Induction&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher shows three short TikTok-style video clips of people turning hobbies into careers (baking → pastry chef, gaming → esports commentator, sketching → animator).&lt;br&gt;2. Students raise hands to say which hobby-career link surprised them most.&lt;br&gt;3. Teacher frames the writing task: you will write a short summary explaining how a hobby connects to a future dream career.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Lesson Development&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Text Model - Hobby to Career&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Teacher projects a model text: 'Khairul loves fixing old motorbikes. This hobby taught him problem-solving and patience. He now dreams of being a mechanical engineer.'&lt;br&gt;2. Class identifies key parts: hobby (fixing bikes), skills gained (problem-solving, patience), career (mechanical engineer).&lt;br&gt;3. Teacher highlights linking phrases: because of this hobby, this taught me, this connects to.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pair Idea Web - Connect the Dots&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. In pairs, students draw a simple 2-circle Venn diagram: left circle = hobby, right circle = dream job, overlap = skills shared.&lt;br&gt;2. Pairs discuss what skills their hobby builds and brainstorm which career fits.&lt;br&gt;3. Each pair shares one connection with the class. Teacher gives oral feedback on reasoning quality.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Independent Writing - Paragraph Draft&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1. Students write a 4-5 sentence paragraph: state hobby → describe skills gained → explain career link → give a reason.&lt;br&gt;2. Teacher circulates, checks sentence frames and connector use (because, therefore, as a result).&lt;br&gt;3. Early finishers swap paragraphs with a partner and underline the best linking phrase used.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;&lt;span style="text-decoration: underline;"&gt;&lt;strong&gt;Post-lesson&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1. Exit ticket: Students write one new linking phrase they used today that they had not used before.&lt;br&gt;2. Teacher previews next week: we will peer-edit these paragraphs and publish them as a class blog post.&lt;/p&gt;</pre>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="dot" style="background:var(--pastel-2e)"></span> Reflection</h2>
+      <div class="copy-block">
+        <button class="copy-btn" data-copy-id="refl-2E-Thu"><span class="icon icon-copy"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span><span class="icon icon-check"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 11"/></svg></span><span class="btn-label">Copy</span></button>
+        <div class="content reflection-content" id="refl-2E-Thu">Aliff Fahmii produced a well-structured paragraph connecting his interest in football to sports science, using 'because of this' confidently. Hani Raihannah showed clear progress in paragraph organisation -- she wrote four connected sentences without prompting. A few weaker students (Nur Damia Qistina, Santosh Rau) still needed word banks, but all completed the draft within the allotted time. Next lesson, I will provide partial sentence frames for students who need more scaffolding.</div>
+      </div>
+    </div></div>
+
+</div>
+
+<div class="toast-container"><div class="toast" id="toast"><span class="icon">✔</span><span id="toast-msg">Copied!</span></div></div>
+<script>
+function c(t,b){if(b.classList.contains('copied'))return;navigator.clipboard.writeText(t).then(()=>{b.classList.add('copied');const o=document.getElementById('toast');o.classList.add('show');setTimeout(()=>o.classList.remove('show'),1500)})}
+document.querySelectorAll('.copy-btn').forEach(b=>b.addEventListener('click',()=>{const e=document.getElementById(b.dataset.copyId);if(e)c(e.textContent,b);else{const d=b.closest('.copy-block').querySelector('.content');if(d)c(d.textContent.trim(),b)}}))
+document.querySelectorAll('.copy-sm').forEach(b=>b.addEventListener('click',()=>c(b.dataset.row,b)))
+function switchClass(cls){document.querySelectorAll('.class-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.class-panel').forEach(p=>p.classList.remove('active'));document.querySelector('.class-tab[onclick*="'+cls+'"]').classList.add('active');document.getElementById('panel-'+cls).classList.add('active')}
+function switchDay(cls,day){const p=document.getElementById('panel-'+cls);p.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));p.querySelectorAll('.day-panel').forEach(d=>d.classList.remove('active'));p.querySelector('.day-tab[onclick*="'+day+'"]').classList.add('active');document.getElementById('day-'+cls+'-'+day).classList.add('active')}
+function handleHash(){const h=window.location.hash;if(!h)return;const m=h.match(/^#panel-(1[DEM]|2[DE])$/);if(m)switchClass(m[1])}
+window.addEventListener('hashchange',handleHash);window.addEventListener('load',handleHash)
+</script>
+</body>
+</html>
