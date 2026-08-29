@@ -1,6 +1,7 @@
 # Scratch / working files — NEVER commit these (cron deploys explicit paths anyway)
 cids_week_*.json
 week_*.md
+takwim*.md
 longan_context.md
 supermarket_aisles.html
 shopping_*.json
